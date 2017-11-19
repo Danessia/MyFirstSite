@@ -1,0 +1,13 @@
+<html>
+
+{% for post in posts %}
+    <div>
+        <h1><a href="">{{ post.title }}</a></h1>
+		<p>{{ post.text|linebreaksbr }}</p>
+		<p><input name="Val1" type="button" value="{{ post.var1 }}"></p>
+		<p><input name="Val1" type="button" value="{{ post.var2 }}"></p>
+		<p><input name="Val1" type="button" value="{{ post.var3 }}"></p>
+    </div>
+{% endfor %}
+
+</html>
