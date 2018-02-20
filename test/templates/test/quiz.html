@@ -1,0 +1,17 @@
+{% extends 'test/base.html' %}
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <h1><a href="">{{ post.title }}</a></h1>
+            <p>{{ post.question|linebreaksbr }}</p>
+            {% for variant in post.variants.all %}
+                <p><input name="{{ variant.id }}" type="button" class="btn variant" value="{{ variant.text }}"></p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <!-- Кнопки
+    <button id="Var1" data-id="{{ post.id }}" value="{{ post.var1 }}"
+                      class="btn variant" type="button">Test</button>
+    -->
+{% endblock %}
