@@ -1,31 +1,9 @@
-{% load staticfiles %}
-<html>
-<head>
-    <title>Dana's test of English</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/test.css' %}">
-</head>
-<body>
-    <div class="page-header">
-        <h1><a href="/">Dana's test of English</a></h1>
-    </div>
+{% extends 'test/base.html' %}
+{% block content %}
+    <a href="{% url 'quiz' %}">Test</a>
 
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-                {% for post in posts %}
-                    <div class="post">
-                        <h1><a href="">{{ post.title }}</a></h1>
-                        <p>{{ post.text|linebreaksbr }}</p>
-                        <p><input name="Val1" type="button" value="{{ post.var1 }}"></p>
-                        <p><input name="Val1" type="button" value="{{ post.var2 }}"></p>
-                        <p><input name="Val1" type="button" value="{{ post.var3 }}"></p>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-</html>
+    <!-- Кнопки
+    <button id="Var1" data-id="{{ post.id }}" value="{{ post.var1 }}"
+                      class="btn variant" type="button">Test</button>
+    -->
+{% endblock %}

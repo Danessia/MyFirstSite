@@ -1,20 +1,41 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Post
+from django import forms
+from .models import Question, Variant, ResultQuestion
 
 
-# Create your views here.
-def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'test/post_list.html', {'posts': posts})
+class QuestionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['right_variant'].queryset = Variant.objects.filter(question=self.instance)
+        else:
+            self.fields['right_variant'].queryset = Variant.objects.none()
 
-def choice_made(request):
-    post_id = request.GET.get('post_id', None)
-    chVal = ''
-    if (post_id):
-        post = Post.objects.get(id=int(post_id))
-        if post is not None:
-            post.chVar = post.var1
-            chVal = post.chVar
-            post.save()
-    return HttpResponse(chVal)
+    class Meta:
+        model = Question
+        fields = ('title', 'question', 'right_variant', 'complexity')
+
+
+class ResultQuestionForm(forms.ModelForm):
+    answer = forms.ModelChoiceField(
+        queryset=Variant.objects.none(),
+        required=True,
+        widget=forms.RadioSelect(),
+        empty_label=None,
+    )
+    question = forms.ModelChoiceField(
+        queryset=Question.objects.all(),
+        widget=forms.HiddenInput(),
+        required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(ResultQuestionForm, self).__init__(*args, **kwargs)
+        self.fields['answer'].queryset = Variant.objects.filter(question=self.initial['question'])
+
+    class Meta:
+        model = ResultQuestion
+        fields = ('question', 'answer')
+
+
+class ClearResults(forms.Form):
+    clear = forms.BooleanField()

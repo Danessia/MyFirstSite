@@ -3,17 +3,8 @@
     <form method="POST">
         <div class="post">
             {% csrf_token %}
-            <h1><a href="">{{ question.title }}</a></h1>
-            <p>{{ question.get_formatted_question|safe }}</p>
-            {{ form.question }}
-            {{ form.answer }}
+            {{form}}
             <button type="submit">Submit</button>
         </div>
     </form>
-
-<script>
-    $('#id_answer').on('click', 'li', function(){
-        $('#answer').text($(this).text())
-    })
-</script>
 {% endblock %}
